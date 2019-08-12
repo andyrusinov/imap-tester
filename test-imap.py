@@ -15,8 +15,8 @@ def main():
     print('ERROR: need to set username password and server vars:\n' + \
           'docker run --env username=\'account\' --env password=\'password\'' + \
           '--env server=\'server\' --rm -it andyrusinov/imap-tester\n' + \
-          'Note: this script never saves the messages. All it does is ' + \
-          'downloading them, printing their size and dropping them (thus checking the connection)')
+          'Note: this script never saves the messages. All it does is downloading ' + \
+          'them from INBOX, printing their size and dropping them (thus checking the connection)')
     exit()
   
   # connect
