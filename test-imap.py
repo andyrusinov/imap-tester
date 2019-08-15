@@ -1,5 +1,5 @@
 #/usr/local/bin/python
-import os, urllib.parse, email
+import os, urllib.parse, email, ssl
 from imapclient import IMAPClient
 
 
