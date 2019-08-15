@@ -19,7 +19,7 @@ def main():
     servername is None:
     print('ERROR: need to set username password and server vars:\n' + \
           'docker run --env username=\'account\' --env password=\'password\'' + \
-          '--env server=\'server\' [--env insecure] --rm -it andyrusinov/imap-tester\n' + \
+          '--env server=\'server\' [--env insecure=yes] --rm -it andyrusinov/imap-tester\n' + \
 	  'optional var [insecure] drops SSL secure requirements\n' + \
           'Note: this script never saves the messages. All it does is downloading ' + \
           'them from INBOX, printing their size and dropping them (thus checking the connection)')
