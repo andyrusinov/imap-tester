@@ -8,19 +8,25 @@ def main():
                                  os.environ.get('password'), \
                                  os.environ.get('server')
 
+  ssl_context = ssl.create_default_context()
+  if not os.environ.get('insecure') is None: # variable "insecure" is set, need to disable cert check
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+
   # check variables
   if username is None or \
     password is None or \
     servername is None:
     print('ERROR: need to set username password and server vars:\n' + \
           'docker run --env username=\'account\' --env password=\'password\'' + \
-          '--env server=\'server\' --rm -it andyrusinov/imap-tester\n' + \
+          '--env server=\'server\' [--env insecure] --rm -it andyrusinov/imap-tester\n' + \
+	  'optional var [insecure] drops SSL secure requirements\n' + \
           'Note: this script never saves the messages. All it does is downloading ' + \
           'them from INBOX, printing their size and dropping them (thus checking the connection)')
     exit()
   
   # connect
-  with IMAPClient(servername) as server:
+  with IMAPClient(servername, ssl_context=ssl_context) as server:
     server.login(username, password)
     server.select_folder('INBOX', readonly=True)
 
