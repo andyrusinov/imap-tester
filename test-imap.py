@@ -32,9 +32,10 @@ def main():
 
     # find messages, print their size
     messages = server.search()
+    print ("uid\tFrom\tSubject\tSize")
     for uid, message_data in server.fetch(messages, 'RFC822').items():
       email_message = email.message_from_bytes(message_data[b'RFC822'])
-      print(uid, email_message.get('From'), email_message.get('Subject'), "Size = " + \
+      print(uid, email_message.get('From'), '"'+email_message.get('Subject')+'"', "Size = " + \
       str(len(email_message.__bytes__() if email_message.__bytes__() else '')) )
 
 
