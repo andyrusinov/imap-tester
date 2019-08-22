@@ -32,11 +32,25 @@ def main():
 
     # find messages, print their size
     messages = server.search()
-    print ("uid\tFrom\tSubject\tSize")
+    output = [("uid","From","Subject","Size")]
     for uid, message_data in server.fetch(messages, 'RFC822').items():
       email_message = email.message_from_bytes(message_data[b'RFC822'])
-      print(uid, email_message.get('From'), '"'+email_message.get('Subject')+'"', "Size = " + \
-      str(len(email_message.__bytes__() if email_message.__bytes__() else '')) )
+      output += [(uid, email_message.get('From'), email_message.get('Subject'),
+      str(len(email_message.__bytes__() if email_message.__bytes__() else '')))]
+
+  # determine string lengths to make output more fancy
+  lengths=[0]*4
+  format=""
+  for x in output:
+    for i in range(4):
+      lengths[i]=max(lengths[i],len(str(x[i]))+2)
+  lengths[0]=min(lengths[0],35) # trim very long uid
+  for i in range(4):
+    format+='{:'+str(lengths[i])+'}\t'
+  for x in output:
+    print(format.format(*x))
+
+
 
 
 # Standard boilerplate to call the main() function to begin
