@@ -34,9 +34,11 @@ def process_folder(server, folder):
   output = [("uid","From","Subject","Size")] if len(messages) else [] # if there is 0 messages, we are not printing anything
   for uid, message_data in server.fetch(messages, 'RFC822').items():
     email_message = email.message_from_bytes(message_data[b'RFC822'])
-    output += [(uid, email_message.get('From'), email_message.get('Subject'),
-    str(len(email_message.__bytes__() if email_message.__bytes__() else '')))]
-  print_tabbed(output)
+    message_from = email_message.get('From') if email_message.get('From') else ""
+    message_subject = email_message.get('Subject') if email_message.get('Subject') else ""
+    message_size = str(len(email_message.__bytes__())) if email_message.__bytes__() else "0"
+    output += [(uid, message_from, message_subject, message_size)]
+    print_tabbed(output)
   print()
   return True
 
