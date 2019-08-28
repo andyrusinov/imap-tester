@@ -40,7 +40,7 @@ def process_folder(server, folder):
       message_subject = message_subject[:60] + '...'
     message_size = str(len(email_message.__bytes__())) if email_message.__bytes__() else "0"
     output += [(uid, message_from, message_subject, message_size)]
-    print_tabbed(output)
+  print_tabbed(output)
   print()
   return True
 
