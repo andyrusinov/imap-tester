@@ -30,8 +30,8 @@ def print_tabbed(output):
 def process_folder(server, folder):
   try:
     server.select_folder(folder, readonly=True)
-  except exceptions.IMAPClientError:
-    print("Could not select subscribed folder" + folder)
+  except:
+    print(f"Could not select subscribed folder \"{folder}\"")
     return True # exit from procedure, do not process further
   messages = server.search()
   print(f"Processing folder {folder}. {len(messages)} messages found")
