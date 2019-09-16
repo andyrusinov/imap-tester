@@ -28,7 +28,11 @@ def print_tabbed(output):
 
 # process folder, print number of messages
 def process_folder(server, folder):
-  server.select_folder(folder, readonly=True)
+  try:
+    server.select_folder(folder, readonly=True)
+  except IMAPClientError:
+    print("Could not select subscribed folder" + folder)
+    return True # exit from procedure, do not process further
   messages = server.search()
   print(f"Processing folder {folder}. {len(messages)} messages found")
   output = [("uid","From","Subject","Size")] if len(messages) else [] # if there is 0 messages, we are not printing anything
